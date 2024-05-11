@@ -14,3 +14,21 @@ torch.cuda.is_avilable()을 해도 False가 뜨는 경우
 1. conda env create -f environment.yaml
 
 2. python train.py
+
+## Directory
+
+    Refine
+    ├── data
+    │   ├── motion
+    │       ├── 001.npy
+    │       ├── 002.npy
+    │       ├── ...
+    │       └── 211.npy
+    ├── dataset
+    │   └── ...
+    ├── experiments
+    │   └── ...
+    ├── model
+    │   └── ...
+    ├── ...
+    └── ...
