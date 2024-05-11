@@ -39,12 +39,11 @@ def steps(epoch, dataloader, model, optimizer, criterion, device, mode=0):
 
         loss = criterion(output, y)
 
-        loss.backward()
-
         summation_loss = summation_loss + loss.detach().cpu().numpy()
-
-        optimizer.step()
-        optimizer.zero_grad()
+        if mode == 0:
+            loss.backward()
+            optimizer.step()
+            optimizer.zero_grad()
 
         iterator.set_description(f"{desc}|MSE:{summation_loss/(i+1)}")
 
@@ -84,7 +83,6 @@ def train(args):
         dropout=args.dropout
     )
 
-
     optimizer = torch.optim.AdamW(params=model.parameters(), lr=args.learning_rate)
 
     criterion = nn.MSELoss()
@@ -102,7 +100,6 @@ def train(args):
     for i in range(args.epochs):
         model = model.train()
         train_losses.append(steps(i+1, train_loader, model, optimizer, criterion, device))
-
         model = model.eval()
         with torch.no_grad():
             valid_losses.append(steps(i+1, valid_loader, model, optimizer, criterion, device))
@@ -116,7 +113,6 @@ def train(args):
         torch.save(ckpt, os.path.join(save_dir, "last.pt"))
         
         if valid_losses[-1] <= min(valid_losses):
-
             torch.save(ckpt, os.path.join(save_dir, "best.pt"))
             print(f"Best Validation Loss {i+1} : {valid_losses[i]}")
             print(f"Saved at {os.path.join(save_dir, 'best.pt')}")
@@ -142,8 +138,8 @@ if __name__ == "__main__":
     # 학습 파라미터
     parser.add_argument("--random_seed", type=int, default=42, help="fix random seed")
     parser.add_argument("--num_workers", type=int, default=2, help="")
-    parser.add_argument("--epochs", type=int, default=8, help="")
-    parser.add_argument("--batch_size", type=int, default=1, help="")
+    parser.add_argument("--epochs", type=int, default=1000, help="")
+    parser.add_argument("--batch_size", type=int, default=64, help="")
     parser.add_argument("--learning_rate", type=float, default=1e-4, help="")
     parser.add_argument("--gpu", type=int, default=1, help="")
 
