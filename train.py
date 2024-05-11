@@ -4,8 +4,10 @@ import argparse
 import tqdm
 import os
 import glob
-
+import yaml
 import numpy as np 
+
+import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
@@ -47,7 +49,7 @@ def steps(epoch, dataloader, model, optimizer, criterion, device, mode=0):
 
         iterator.set_description(f"{desc}|MSE:{summation_loss/(i+1)}")
 
-    return summation_loss
+    return summation_loss/(i+1)
 
 
 
@@ -94,6 +96,10 @@ def train(args):
         optimizer.load_state_dict(ckpt['optimizer'], strict=True)
 
     os.makedirs(save_dir, exist_ok=True)
+    arg_dict = vars(args)  
+    yaml_str = yaml.dump(arg_dict, default_flow_style=False)
+    with open(os.path.join(save_dir, "parameters.yaml"), 'w') as file:
+        file.write(yaml_str)
 
     train_losses = []
     valid_losses = []
@@ -117,6 +123,8 @@ def train(args):
             print(f"Best Validation Loss {i+1} : {valid_losses[i]}")
             print(f"Saved at {os.path.join(save_dir, 'best.pt')}")
 
+        print("")
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
@@ -136,10 +144,10 @@ if __name__ == "__main__":
     parser.add_argument("--checkpoint", type=str, default="", help="")
 
     # 학습 파라미터
-    parser.add_argument("--random_seed", type=int, default=42, help="fix random seed")
+    parser.add_argument("--random_seed", type=int, default=42, help="Fix random seed")
     parser.add_argument("--num_workers", type=int, default=2, help="")
     parser.add_argument("--epochs", type=int, default=1000, help="")
-    parser.add_argument("--batch_size", type=int, default=64, help="")
+    parser.add_argument("--batch_size", type=int, default=256, help="")
     parser.add_argument("--learning_rate", type=float, default=1e-4, help="")
     parser.add_argument("--gpu", type=int, default=1, help="")
 
