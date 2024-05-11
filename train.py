@@ -99,10 +99,10 @@ def train(args):
     valid_losses = []
     for i in range(args.epochs):
         model = model.train()
-        train_losses.append(steps(i+1, train_loader, model, optimizer, criterion, device))
+        train_losses.append(steps(i+1, train_loader, model, optimizer, criterion, device, mode=0))
         model = model.eval()
         with torch.no_grad():
-            valid_losses.append(steps(i+1, valid_loader, model, optimizer, criterion, device))
+            valid_losses.append(steps(i+1, valid_loader, model, optimizer, criterion, device, mode=1))
 
 
         ckpt = {
