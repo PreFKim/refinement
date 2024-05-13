@@ -15,7 +15,7 @@ from model import RefineNet
 from dataset import RefineDataset
 
 def set_seed(seed):
-    if seed != -1:
+    if seed >= 0:
         random.seed(seed)
         np.random.seed(seed)
         torch.manual_seed(seed)
