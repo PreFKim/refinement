@@ -3,6 +3,7 @@ data/*
 experiments/*
 infer/*
 
+render/SMPLX_NEUTRAL.npz
 test.ipynb
 __pycache__
 nohup.out
