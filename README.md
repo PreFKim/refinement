@@ -15,7 +15,8 @@
     - [FineDance Drive](https://drive.google.com/file/d/1zQvWG9I0H4U3Zrm8d_QD_ehenZvqfQfS/view)
 
     설치 데이터 셋 내부의 .npy 파일들을 ./data/motion에 옮김
-    
+
+    SMPLX_NEUTRAL.npz 파일을 ./render에 옮김
 
 ## Trouble shooting
 
@@ -36,16 +37,16 @@
 
     2. ImportError: libgthread-2.0.so.0: cannot open shared object file: No such file or directory [참조](https://yuevelyne.tistory.com/entry/OpenCV-ImportError-libGLso1-cannot-open-shared-object-file-No-such-file-or-directory)
 
-        '''
+        ```
         apt-get install -y libglib2.0-0
-        '''
+        ```
         설치 과정중에 6 Asia 선택 후 69 Seoul 선택 
 
     3. FileNotFoundError: [Errno 2] No such file or directory: 'Xvfb' [참조](https://stackoverflow.com/questions/32173839/easyprocess-easyprocesscheckinstallederror-cmd-xvfb-help-oserror-errno)
 
-        '''
+        ```
         apt-get install xvfb
-        '''
+        ```
 
 ## Directory
 
