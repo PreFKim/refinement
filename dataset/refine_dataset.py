@@ -55,7 +55,7 @@ class RefineDataset(Dataset):
         output = torch.from_numpy(motion[:,:3]) # Root Position
         output = output-output[:1] # Normalize root position based on root position of first frame
 
-        filename = self.filenames[motion_idx]
+        filename = f"{self.filenames[motion_idx]}_{frame_idx:04d}"
 
         return {
             "input":input,
