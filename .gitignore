@@ -1,7 +1,8 @@
 FineDance/*
 data/*
-render/*
 experiments/*
+infer/*
 
 test.ipynb
 __pycache__
+nohup.out
