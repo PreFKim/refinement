@@ -15,6 +15,7 @@ def inference(args):
     device = "cpu" if args.gpu<0 else f"cuda:{args.gpu}"
 
     dataset = RefineDataset(seq_len=args.seq_len, stride=args.stride, mode=args.mode)
+    
     model = RefineNet(
         num_layers=args.nlayer, 
         latent_dim=args.latent_dim,
@@ -36,7 +37,11 @@ def inference(args):
     if args.seed >= 0:
         np.random.seed(args.seed)
 
-    idx = np.random.permutation(len(dataset))[:args.num_samples]
+    if args.num_samples == -1:
+        idx = np.arange(len(dataset))
+    else:
+        idx = np.random.permutation(len(dataset))[:args.num_samples]
+
     iterator = tqdm.tqdm(idx)
     with torch.no_grad():
         for i in iterator:
@@ -52,14 +57,14 @@ def inference(args):
             pred = torch.cat([pred, x], -1).squeeze(0).detach().cpu().numpy() # 1, seq_len, 3+dim 
             true = torch.cat([y, x], -1).squeeze(0).detach().cpu().numpy() # 1, seq_len, 3+dim
 
-            np.save(os.path.join(save_path, f"pred_{data['filename']}"), pred)
-            np.save(os.path.join(save_path, f"true_{data['filename']}"), true)
+            np.save(os.path.join(save_path, f"{data['filename']}_pred"), pred)
+            np.save(os.path.join(save_path, f"{data['filename']}_true"), true)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--gpu", type=int, default=-1, help="")
+    parser.add_argument("--gpu", type=int, default=-1, help="-1:CPU")
     parser.add_argument("--save_path", type=str, default="./infer", help="")
 
     # 데이터셋 파라미터
@@ -80,5 +85,5 @@ if __name__ == "__main__":
     parser.add_argument("--checkpoint", type=str, default="./experiments/0/best.pt", help="")
     args = parser.parse_args()
 
-
     inference(args)
+
