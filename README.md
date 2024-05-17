@@ -25,6 +25,8 @@
     1. nvcc -V 로 cuda 버전 확인
 
     2. [파이토치 버전확인](https://pytorch.org/get-started/previous-versions/)에서 Cuda 버전과 환경에 맞는 명령어 선택
+ 
+    3. conda install pytorch==2.0.0 torchvision==0.15.0 torchaudio==2.0.0 pytorch-cuda=11.7 -c pytorch -c nvidia
 
 - render.py 관련
 
