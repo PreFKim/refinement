@@ -1,5 +1,13 @@
 # Root ReFineNet
 
+## Problem
+
+Diffusion으로 모션을 생성하는 경우 모션은 잘 생성되나 Root Position이 정확하게 생성이 되지 않는 문제점이 있다.
+
+실질적으로 Root Position에 대한 학습은 쉽게 이루어지지 않기 때문에 따로 Root Position을 추론하는 모델을 작성하는 것이 더 낫다는 것을 이해했다.
+
+이를 통해 관절 사이의 움직임을 이해하도록 Transformer 구조를 활용하여 실질적인 Root Position을 예측할 수 있도록 하는 모델을 구성한다.
+
 ## Installation
 
 1. 환경 설정
