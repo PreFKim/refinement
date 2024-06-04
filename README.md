@@ -57,6 +57,12 @@ Diffusion으로 모션을 생성하는 경우 모션은 잘 생성되나 Root Po
         ```
         apt-get install xvfb
         ```
+    4. TypeError: must be real number, not NoneType 영상 생성 중에 발생 [참조](https://stackoverflow.com/questions/68032884/getting-typeerror-must-be-real-number-not-nonetype-whenever-trying-to-run-wr)
+ 
+       ```
+       pip install moviepy --upgrade
+       ```
+       업데이트 후 커널 재시작
 
 ## Directory
 
